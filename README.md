@@ -1,3 +1,3 @@
 # Blog-
 basic blogging app
-tech - python, django, html, css, sqlite3
+tech - python, django, html, css
