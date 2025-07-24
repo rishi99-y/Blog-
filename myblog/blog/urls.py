@@ -9,6 +9,6 @@ urlpatterns = [
     path('post/<slug:slug>/edit/', views.post_edit, name='post_edit'),
     path('post/<slug:slug>/delete/', views.post_delete, name='post_delete'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', views.logout_view, name='logout'),  # FIXED: Use custom logout view
     path('register/', views.register, name='register'),
 ]
