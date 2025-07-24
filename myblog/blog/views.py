@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -20,12 +20,16 @@ def post_list(request):
             Q(author__username__icontains=search_query)
         )
     
+    # Author filter
+    author_username = request.GET.get('author')
+    if author_username:
+        posts = posts.filter(author__username=author_username)
+    
     # Category filter
     category_slug = request.GET.get('category')
     if category_slug:
         posts = posts.filter(category__slug=category_slug)
     
-    # Pagination
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -37,6 +41,7 @@ def post_list(request):
         'categories': categories,
         'search_query': search_query,
         'selected_category': category_slug,
+        'selected_author': author_username,
     }
     return render(request, 'blog/post_list.html', context)
 
@@ -118,3 +123,10 @@ def register(request):
         form = CustomUserCreationForm()
     
     return render(request, 'registration/register.html', {'form': form})
+
+
+def logout_view(request):
+   
+    logout(request)
+    messages.success(request, 'You have been successfully logged out.')
+    return redirect('post_list')

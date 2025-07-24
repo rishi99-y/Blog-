@@ -6,10 +6,9 @@ from .models import Post, Comment
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'slug', 'category', 'content', 'excerpt', 'featured_image', 'status']
+        fields = ['title', 'category', 'content', 'excerpt', 'featured_image', 'status']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-select'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
             'excerpt': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
